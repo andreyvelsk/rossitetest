@@ -20,11 +20,19 @@ body {
 
 .modal-open {
   overflow: hidden;
-  overflow-y: scroll;
   padding-right: 0 !important;
 }
 
 .form-control {
   font-size: 2rem;
+}
+
+.form-submit {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.form-submit button {
+  font-size: inherit;
 }
 /*# sourceMappingURL=style.css.map */
