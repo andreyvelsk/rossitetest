@@ -1,0 +1,30 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 25px;
+}
+
+.open-button {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.open-button button {
+  width: 15rem;
+  height: 5rem;
+  border-radius: 5px;
+  font-size: 2.5rem;
+}
+
+.modal-open {
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 0 !important;
+}
+
+.form-control {
+  font-size: 2rem;
+}
+/*# sourceMappingURL=style.css.map */
