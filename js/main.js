@@ -1,26 +1,23 @@
 $(function() {
     
-    var $namefield = $("#name");
-    var isNameValid = false;
+    var $namefield = $("#name"),
+    $phonefield = $("#phone"),
+    $emailfield = $("#email"),
+    $saveButton = $("#btn-save"),
+    $openButton = $("#btn-open"),
+    $dialog =  $('#dialog');
 
-    var $phonefield = $("#phone");
-    var isPhoneValid = false;
+    var isNameValid = false,
+    isPhoneValid = false,
+    isEmailValid = false;
 
-    var $emailfield = $("#email");
-    var isEmailValid = false;
-
-    var $saveButton = $("#btn-save")
-    //$saveButton.prop('disabled', true)
-    var $openButton = $("#btn-open");
-
-    var $dialog =  $('#dialog');
+    $saveButton.prop('disabled', true)
 
     $openButton.on("click", function (event) {
-        //отменяем стандартную обработку нажатия по кнопке
         event.stopPropagation();
         setTimeout(function() {
             $dialog.modal('show');
-          }, 50);
+          }, 5000);
     });
 
     $saveButton.on("click", function(event) {
@@ -35,6 +32,10 @@ $(function() {
             $namefield.val('');
             $phonefield.val('');
             $emailfield.val('');
+            isNameValid = false;
+            isPhoneValid = false;
+            isEmailValid = false;
+            $saveButton.prop('disabled', true)
             $(".open").fadeIn(500);
         });
         
@@ -49,19 +50,16 @@ $(function() {
             $namefield.removeClass("is-invalid");
             isNameValid = true;
         }
-
-        isFormValid()        
+        isFormValid()
     })
 
     $phonefield.on("input", function(){
         isPhone = function(value){
-            var phoneNumber = /[0-9-()+]{3,20}/; 
-            var res = value.match(phoneNumber);
-            //alert(res);
+            var phoneNumber = /[0-9 -()+]+$/;
+            return phoneNumber.test(value);
         }
-        isPhone($phonefield.val());
 
-        if(!($phonefield.val().length > 0)){
+        if( $phonefield.val().length <= 5 || !(isPhone($phonefield.val())) ){
             $phonefield.addClass("is-invalid");
             isPhoneValid = false;
         }
@@ -69,13 +67,17 @@ $(function() {
             $phonefield.removeClass("is-invalid");
             isPhoneValid = true;
         }
-
         isFormValid()
     });
 
     $emailfield.on("input", function(){
-        
-        if(!($emailfield.val().length > 0)){
+
+        isEmail = function(value){
+            var email = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+            return email.test(value);
+        }
+
+        if($emailfield.val().length <= 0 || !( isEmail($emailfield.val()) ) ){
             $emailfield.addClass("is-invalid");
             isEmailValid = false;
         }
