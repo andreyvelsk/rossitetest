@@ -9,19 +9,38 @@ $(function() {
     var $emailfield = $("#email");
     var isEmailValid = false;
 
-    var $saveButton = $("#savebutton")
-    $saveButton.prop('disabled', true)
+    var $saveButton = $("#btn-save")
+    //$saveButton.prop('disabled', true)
+    var $openButton = $("#btn-open");
 
+    var $dialog =  $('#dialog');
 
-    $("#btn-open").on("click", function (event) {
+    $openButton.on("click", function (event) {
         //отменяем стандартную обработку нажатия по кнопке
         event.stopPropagation();
         setTimeout(function() {
-            $('#dialog').modal('show');
+            $dialog.modal('show');
           }, 50);
     });
 
-    $namefield.change(function(){
+    $saveButton.on("click", function(event) {
+        event.preventDefault();
+        $dialog.modal('hide');
+        showInfo();        
+    })
+
+    $("#btn-reset").on("click", function() {
+        
+        $(".info").fadeOut(500, function() {
+            $namefield.val('');
+            $phonefield.val('');
+            $emailfield.val('');
+            $(".open").fadeIn(500);
+        });
+        
+    })
+
+    $namefield.on("input", function(){
         if(!($namefield.val().length > 0)){
             $namefield.addClass("is-invalid");
             isNameValid = false;
@@ -32,29 +51,29 @@ $(function() {
         }
 
         isFormValid()        
-    });
+    })
 
-    $phonefield.change(function(){
+    $phonefield.on("input", function(){
         isPhone = function(value){
             var phoneNumber = /[0-9-()+]{3,20}/; 
             var res = value.match(phoneNumber);
-            alert(res);
+            //alert(res);
         }
         isPhone($phonefield.val());
 
         if(!($phonefield.val().length > 0)){
             $phonefield.addClass("is-invalid");
-            isNameValid = false;
+            isPhoneValid = false;
         }
         else {
             $phonefield.removeClass("is-invalid");
-            isNameValid = true;
+            isPhoneValid = true;
         }
 
         isFormValid()
     });
 
-    $emailfield.change(function(){
+    $emailfield.on("input", function(){
         
         if(!($emailfield.val().length > 0)){
             $emailfield.addClass("is-invalid");
@@ -69,7 +88,7 @@ $(function() {
     });
 
     function isFormValid() {
-        if (isNameValid){
+        if (isNameValid && isPhoneValid && isEmailValid){
             $saveButton.prop('disabled', false)
         }
         else{
@@ -77,6 +96,18 @@ $(function() {
         }
     }
 
-   
+    function showInfo() {
+        $(".open").hide();
+
+        var $infoname = $(".info_name");
+        var $infophone = $(".info_phone");
+        var $infoemail = $(".info_email");
+
+        $infoname.text($namefield.val());
+        $infophone.text($phonefield.val());
+        $infoemail.text($emailfield.val());
+
+        $(".info").fadeIn(500);
+    }
 
 })

@@ -1,23 +1,34 @@
 html
     font-size: 10px
-
+    height: 100%
 body
     font-size: 25px
-
+    height: 100%
 .container
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
 
-.open-button
+.open
     text-align: center
-    vertical-align: middle
-    button
-        width: 15rem
-        height: 5rem
-        border-radius: 5px
-        font-size: 2.5rem
+    
+#btn-open
+    width: 15rem
+    height: 5rem
+    border-radius: 5px
+    font-size: 2.5rem
 
-.modal-open
-	overflow: hidden
-	padding-right: 0 !important
+.info
+    display: none
+    @extend .open
+#btn-reset
+    @extend #btn-open
+.modal
+
+    &-open
+        overflow: hidden
+        padding-right: 0 !important
 
 .form
     &-control
